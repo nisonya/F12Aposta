@@ -44,7 +44,10 @@ public class MainActivity2 extends AppCompatActivity {
 
     public int level = 0;
     ProgressBar pb;
-
+    int quest_number=0;
+    public Button btn1, btn2, btn3, btn4, btnStartOver, btnNext;
+    public  ArrayList<String> answers = new ArrayList<String>();
+    public Question question;
     public boolean to;
     private static final String FILE_NAME="MY_FILE_NAME";
     private static final String URL_STRING="URL_STRING";
@@ -86,7 +89,6 @@ public class MainActivity2 extends AppCompatActivity {
         intent.putExtra("url", url);
         startActivity(intent);
     }
-
 
     //проверка эмулятора
     private boolean checkIsEmu() {
@@ -167,6 +169,7 @@ public class MainActivity2 extends AppCompatActivity {
                 });
         return to;
     }
+
     //получение ссылки и обработка вызова заглушки/WebView
     public void getURLStr(){
         try {
@@ -199,12 +202,14 @@ public class MainActivity2 extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
     //получение локальной ссылки
     public String getSharedPrefStr(){
         sPref = getSharedPreferences(FILE_NAME,MODE_PRIVATE);
         String url_SP = sPref.getString(URL_STRING,"");
         return url_SP;
     }
+
     //подключение к Firebase
     public void getFireBaseUrlConnection(){
         //подключение к FireBase
@@ -215,11 +220,19 @@ public class MainActivity2 extends AppCompatActivity {
         mfirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
         mfirebaseRemoteConfig.setDefaultsAsync(R.xml.url_values);
     }
+
     //вызыв зваглушки
     public void plug(){
         setContentView(R.layout.activity_main2);
         DBHelper dbHelper = new DBHelper(this);
         database= dbHelper.getWritableDatabase();
+        btn1 =findViewById(R.id.answ1);
+        btn2 =findViewById(R.id.answ2);
+        btn3 =findViewById(R.id.answ3);
+        btn4 =findViewById(R.id.answ4);
+
+        btnStartOver =findViewById(R.id.start_over);
+        btnNext =findViewById(R.id.next_quest);
 
     }
     //сохранение ссылки локально
@@ -230,4 +243,29 @@ public class MainActivity2 extends AppCompatActivity {
         browse(url_FB);
     }
 
+    public Question filldate(int i){
+        Question mQuestion = new Question();
+        ContentValues cv = new ContentValues();
+        Cursor cursor = database.query(DBHelper.TABLE_NAME, null, "_id =="+i, null, null, null,null);
+        if(cursor.moveToFirst()){
+            int idIndex =cursor.getColumnIndex(DBHelper.KEY_ID);
+            int questIndex =cursor.getColumnIndex(DBHelper.KEY_QUEST);
+            int a1Index =cursor.getColumnIndex(DBHelper.KEY_ANSWER1);
+            int a2Index =cursor.getColumnIndex(DBHelper.KEY_ANSWER2);
+            int a3Index =cursor.getColumnIndex(DBHelper.KEY_ANSWER3);
+            int a4Index =cursor.getColumnIndex(DBHelper.KEY_ANSWER4);
+            int rigntAnswIndex =cursor.getColumnIndex(DBHelper.KEY_RIGHT_ANSWER);
+            int photoIndex =cursor.getColumnIndex(DBHelper.KEY_PHOTO);
+            do {
+                mQuestion = new Question(cursor.getInt(idIndex),
+                        cursor.getString(a1Index),cursor.getString(a2Index),cursor.getString(a3Index),cursor.getString(a4Index),cursor.getString(rigntAnswIndex),
+                        cursor.getString(questIndex), cursor.getString(photoIndex));
+            }while(cursor.moveToNext());
+        }
+        else{
+            Log.d("mLog","0 rows");
+        }
+        cursor.close();
+        return mQuestion;
+    }
 }
