@@ -1,0 +1,195 @@
+{
+  "project_info": {
+    "project_number": "972520060607",
+    "project_id": "lottomatrica",
+    "storage_bucket": "lottomatrica.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972520060607:android:76419f83464604bc7c780a",
+        "android_client_info": {
+          "package_name": "bet25.live.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "972520060607-e13kqh1j1jofluoccchj5hr4iamt266p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "bet25.live.myapplication",
+            "certificate_hash": "2f4361b2490d7707d86d87e3a68fb4e5644c288d"
+          }
+        },
+        {
+          "client_id": "972520060607-aunibpcivckbu6qkmothmao1jn9qatii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo0x_HiOsjNbCJxijr8WAlaEsd_oiQC6U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "972520060607-aunibpcivckbu6qkmothmao1jn9qatii.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972520060607:android:fb0951510101b2047c780a",
+        "android_client_info": {
+          "package_name": "bet25.live.win"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "972520060607-8gc6i0er34m1843rm2vt2dgk6jp1nibl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "bet25.live.win",
+            "certificate_hash": "2f4361b2490d7707d86d87e3a68fb4e5644c288d"
+          }
+        },
+        {
+          "client_id": "972520060607-aunibpcivckbu6qkmothmao1jn9qatii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo0x_HiOsjNbCJxijr8WAlaEsd_oiQC6U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "972520060607-aunibpcivckbu6qkmothmao1jn9qatii.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972520060607:android:be067fb65dabc9887c780a",
+        "android_client_info": {
+          "package_name": "lotto.matica.scommesse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "972520060607-dep6frllg8o9ccc88bhj7670r11mpdf4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "lotto.matica.scommesse",
+            "certificate_hash": "2f4361b2490d7707d86d87e3a68fb4e5644c288d"
+          }
+        },
+        {
+          "client_id": "972520060607-aunibpcivckbu6qkmothmao1jn9qatii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo0x_HiOsjNbCJxijr8WAlaEsd_oiQC6U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "972520060607-aunibpcivckbu6qkmothmao1jn9qatii.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972520060607:android:9e8c60b4242a17a07c780a",
+        "android_client_info": {
+          "package_name": "sportsfanliga.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "972520060607-tnpaeeok6sma3qf81moauno7e78rosa2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sportsfanliga.app",
+            "certificate_hash": "2f4361b2490d7707d86d87e3a68fb4e5644c288d"
+          }
+        },
+        {
+          "client_id": "972520060607-aunibpcivckbu6qkmothmao1jn9qatii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo0x_HiOsjNbCJxijr8WAlaEsd_oiQC6U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "972520060607-aunibpcivckbu6qkmothmao1jn9qatii.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972520060607:android:af1fdf457342f43b7c780a",
+        "android_client_info": {
+          "package_name": "testsports.quizapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "972520060607-6iedqrts3n8sthjg11u1vgbabsjvfko4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "testsports.quizapp",
+            "certificate_hash": "2f4361b2490d7707d86d87e3a68fb4e5644c288d"
+          }
+        },
+        {
+          "client_id": "972520060607-aunibpcivckbu6qkmothmao1jn9qatii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo0x_HiOsjNbCJxijr8WAlaEsd_oiQC6U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "972520060607-aunibpcivckbu6qkmothmao1jn9qatii.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

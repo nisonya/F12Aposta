@@ -15,6 +15,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.BatteryManager;
@@ -28,10 +29,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
@@ -44,10 +47,13 @@ public class MainActivity2 extends AppCompatActivity {
 
     public int level = 0;
     ProgressBar pb;
-    int quest_number=0;
+    int quest_number=1;
+    int points=0;
     public Button btn1, btn2, btn3, btn4, btnStartOver, btnNext;
+    public TextView questTV, numberTV;
+    public ImageView photoIV;
     public  ArrayList<String> answers = new ArrayList<String>();
-    public Question question;
+    public Question mQuestion = new Question();
     public boolean to;
     private static final String FILE_NAME="MY_FILE_NAME";
     private static final String URL_STRING="URL_STRING";
@@ -230,9 +236,15 @@ public class MainActivity2 extends AppCompatActivity {
         btn2 =findViewById(R.id.answ2);
         btn3 =findViewById(R.id.answ3);
         btn4 =findViewById(R.id.answ4);
+        questTV =findViewById(R.id.quest);
+        numberTV = findViewById(R.id.numberQuest);
+        photoIV = findViewById(R.id.quPhoto);
 
         btnStartOver =findViewById(R.id.start_over);
         btnNext =findViewById(R.id.next_quest);
+        btnNext.setEnabled(false);
+        getDate(quest_number);
+        fillDate(mQuestion);
 
     }
     //сохранение ссылки локально
@@ -243,8 +255,7 @@ public class MainActivity2 extends AppCompatActivity {
         browse(url_FB);
     }
 
-    public Question filldate(int i){
-        Question mQuestion = new Question();
+    public void getDate(int i){
         ContentValues cv = new ContentValues();
         Cursor cursor = database.query(DBHelper.TABLE_NAME, null, "_id =="+i, null, null, null,null);
         if(cursor.moveToFirst()){
@@ -266,6 +277,94 @@ public class MainActivity2 extends AppCompatActivity {
             Log.d("mLog","0 rows");
         }
         cursor.close();
-        return mQuestion;
+    }
+
+    public void fillDate(Question question){
+        btn1.setText(question.getA1());
+        btn2.setText(question.getA2());
+        btn3.setText(question.getA3());
+        btn4.setText(question.getA4());
+        questTV.setText(question.getQuest_text());
+        numberTV.setText("Question "+question.getId()+"/12");
+        Glide
+                .with(MainActivity2.this)
+                .load(question.getPhoto())
+                .into(photoIV);
+    }
+
+    public void getAnswer(View view) {
+        switch (view.getId()){
+            case R.id.answ1:
+                checkAnswer(btn1);
+                break;
+            case R.id.answ2:
+                checkAnswer(btn2);
+                break;
+            case R.id.answ3:
+                checkAnswer(btn3);
+                break;
+            case R.id.answ4:
+                checkAnswer(btn4);
+                break;
+        }
+    }
+
+    public void checkAnswer(Button btn){
+        if(btn.getText().equals(mQuestion.getRightQnsw())) {
+            btn.setBackgroundColor(getResources().getColor(R.color.green));
+            points=points+1;
+        }
+        else  btn.setBackgroundColor(getResources().getColor(R.color.red));
+        btnNext.setEnabled(true);
+        btn1.setEnabled(false);
+        btn2.setEnabled(false);
+        btn3.setEnabled(false);
+        btn4.setEnabled(false);
+    }
+
+    public void goToNext(View view) {
+        if(quest_number==12) finishGame();
+        quest_number = quest_number+1;
+        getDate(quest_number);
+        fillDate(mQuestion);
+        btnNext.setEnabled(false);
+        btn1.setEnabled(true);
+        btn2.setEnabled(true);
+        btn3.setEnabled(true);
+        btn4.setEnabled(true);
+        btn1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        btn2.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        btn3.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        btn4.setBackgroundColor(getResources().getColor(R.color.purple_500));
+    }
+
+    public void finishGame(){
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_layout);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+        TextView text_dialog = (TextView) dialog.findViewById(R.id.dialog_remainder);
+        text_dialog.setText("Congratulations! you scored "+points+" points");
+
+        Button btn_ave= (Button) dialog.findViewById(R.id.tryAgain);
+        btn_ave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                quest_number=1;
+                points=0;
+                getDate(quest_number);
+                fillDate(mQuestion);
+                dialog.dismiss();
+            }
+        });
+
+    }
+    public void startOver(View view) {
+        quest_number=1;
+        points=0;
+        getDate(quest_number);
+        fillDate(mQuestion);
     }
 }
