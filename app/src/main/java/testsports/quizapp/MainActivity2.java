@@ -45,6 +45,7 @@ public class MainActivity2 extends AppCompatActivity {
     public int level = 0;
     ProgressBar pb;
 
+    public boolean to;
     private static final String FILE_NAME="MY_FILE_NAME";
     private static final String URL_STRING="URL_STRING";
     public Bundle savedInst;
@@ -143,6 +144,29 @@ public class MainActivity2 extends AppCompatActivity {
         return false;
     }
 
+    private boolean getBool(){
+        mfirebaseRemoteConfig.fetchAndActivate()
+                .addOnCompleteListener(this, new OnCompleteListener<Boolean>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Boolean> task) {
+                        if (task.isSuccessful()) {
+                            Log.i("To", String.valueOf(task.getResult()));
+                            String value = mfirebaseRemoteConfig.getString("to");
+                            if(value.equals("true")){
+                                to = true;
+                            } else if(value.equals("false")) {
+                                to = false;
+                            } else if(value.equals("")) {
+                                to= false;
+                            }
+
+                        } else {
+                            Log.i("To", "null");
+                        }
+                    }
+                });
+        return to;
+    }
     //получение ссылки и обработка вызова заглушки/WebView
     public void getURLStr(){
         try {
