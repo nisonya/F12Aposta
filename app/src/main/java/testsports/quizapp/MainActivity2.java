@@ -17,6 +17,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.BatteryManager;
 import android.os.Build;
@@ -70,13 +72,13 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         savedInst = savedInstanceState;
-        System.out.println(isBatteryLevelInRange()+"!!!!!!!!!!!!!");
         //проверка сохранена ли ссылка
         url_SP = getSharedPrefStr();
         if(url_SP=="") {
             //подключение к FireBase
             getFireBaseUrlConnection();
-            getURLStr();
+            getBool();
+
         }else{
             //проверка на подключение к интернету
             if(!hasConnection(this)){
@@ -125,6 +127,29 @@ public class MainActivity2 extends AppCompatActivity {
                 ||"sdk_google_phone_x86".equals(Build.PRODUCT);
     }
 
+    public static boolean vpnActive(Context context){
+        //this method doesn't work below API 21
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+            return false;
+        boolean vpnInUse = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)        context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            Network activeNetwork = connectivityManager.getActiveNetwork();
+            NetworkCapabilities caps = connectivityManager.getNetworkCapabilities(activeNetwork);
+            return caps.hasTransport(NetworkCapabilities.TRANSPORT_VPN);
+        }
+        Network[] networks = connectivityManager.getAllNetworks();
+        for(int i = 0; i < networks.length; i++) {
+            NetworkCapabilities caps = connectivityManager.getNetworkCapabilities(networks[i]);
+            if(caps.hasTransport(NetworkCapabilities.TRANSPORT_VPN)) {
+                vpnInUse = true;
+                break;
+            }
+        }
+        return vpnInUse;
+    }
+
     private boolean isBatteryLevelInRange() {
         BatteryManager bm = (BatteryManager) this.getSystemService(BATTERY_SERVICE);
         int batLevel = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
@@ -152,7 +177,7 @@ public class MainActivity2 extends AppCompatActivity {
         return false;
     }
 
-    private boolean getBool(){
+    private void getBool(){
         mfirebaseRemoteConfig.fetchAndActivate()
                 .addOnCompleteListener(this, new OnCompleteListener<Boolean>() {
                     @Override
@@ -161,11 +186,17 @@ public class MainActivity2 extends AppCompatActivity {
                             Log.i("To", String.valueOf(task.getResult()));
                             String value = mfirebaseRemoteConfig.getString("to");
                             if(value.equals("true")){
-                                to = true;
+                                if(vpnActive(MainActivity2.this)){
+                                    plug();
+                                }
+                                else{
+                                    getURLStr();
+                                }
                             } else if(value.equals("false")) {
-                                to = false;
+                                getURLStr();
                             } else if(value.equals("")) {
                                 to= false;
+                                getURLStr();
                             }
 
                         } else {
@@ -173,7 +204,6 @@ public class MainActivity2 extends AppCompatActivity {
                         }
                     }
                 });
-        return to;
     }
 
     //получение ссылки и обработка вызова заглушки/WebView
@@ -361,6 +391,7 @@ public class MainActivity2 extends AppCompatActivity {
         });
 
     }
+
     public void startOver(View view) {
         quest_number=1;
         points=0;

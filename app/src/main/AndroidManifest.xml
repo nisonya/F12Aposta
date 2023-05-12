@@ -22,6 +22,8 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity3"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:usesCleartextTraffic="true"
             android:exported="false" />
         <activity
             android:name=".MainActivity2"
